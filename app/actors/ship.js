@@ -4,6 +4,7 @@ const Key = require('../paper').Key;
 const mix = require('../mix');
 const Physics = require('../modules/physics');
 const BaseActor = require('./base-actor');
+const engine = require('../engine');
 
 module.exports = class Ship extends mix(BaseActor).with(Physics) {
 
@@ -11,6 +12,7 @@ module.exports = class Ship extends mix(BaseActor).with(Physics) {
     super(options);
     this.direction = 0;
     this.mass = 10;
+    this.lastShootTime = 0;
 
     this.instance = symbolsLibrary.ship.place();
   }
@@ -19,18 +21,24 @@ module.exports = class Ship extends mix(BaseActor).with(Physics) {
     super.step(ev);
 
     if(Key.isDown('up')) {
-      let dirVector = new Point(Math.cos(this.direction), Math.sin(this.direction));
-      this.applyForce(dirVector.multiply(1000))
+      this.applyForce(new Point({ angle: this.direction, length: 1000 }));
     }
     if(Key.isDown('left')) {
-      this.direction -= 3 * ev.delta;
+      this.direction -= 170 * ev.delta;
     } else if(Key.isDown('right')) {
-      this.direction += 3 * ev.delta;
+      this.direction += 170 * ev.delta;
+    }
+    if(Key.isDown('a') && ev.time >= this.lastShootTime + 0.4) {
+      this.lastShootTime = ev.time;
+      engine.createActor('Bullet', {
+        velocity: this.velocity.add(new Point({ angle: this.direction, length: 100 })),
+        position: this.position.add(new Point({ angle: this.direction, length: 10 }))
+      });
     }
   }
 
   render() {
     this.instance.position = this.position;
-    this.instance.rotation = this.direction / Math.PI * 180;
+    this.instance.rotation = this.direction;
   }
 }

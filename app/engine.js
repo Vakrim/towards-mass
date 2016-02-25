@@ -1,8 +1,3 @@
-const Ship = require('./actors/ship');
-const Planet = require('./actors/planet');
-const Bullet = require('./actors/bullet');
-const Point = require('./paper').Point;
-
 class Engine {
 
   constructor() {
@@ -14,10 +9,8 @@ class Engine {
   init() {
     this.createActor('Ship', { position: new Point(50, 50) });
     this.createActor('Planet', { position: new Point(500, 500), radius: 50 });
+    this.createActor('Planet', { position: new Point(600, 400), radius: 50 });
 
-    for(let i = 10; i < 200; i += 10) {
-      this.createActor('Bullet', { position: new Point(5, i) });
-    }
   }
 
   createActor(type, options) {
@@ -50,3 +43,8 @@ class Engine {
 }
 
 module.exports = new Engine();
+
+const Ship = require('./actors/ship');
+const Planet = require('./actors/planet');
+const Bullet = require('./actors/bullet');
+const Point = require('./paper').Point;
