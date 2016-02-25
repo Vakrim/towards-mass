@@ -1,0 +1,27 @@
+{
+  "name": "towards-mass",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "server": "http-server",
+    "build": "webpack",
+    "watch": "npm run build -- --watch",
+    "start": "npm-run-all --parallel watch server livereload",
+    "livereload": "live-reload public/ --port=9091 --delay=400"
+  },
+  "dependencies": {
+    "http-server": "0.8.5",
+    "babel-core": "6.5.2",
+    "babel-loader": "6.2.2",
+    "babel-preset-es2015": "6.5.0",
+    "webpack": "1.12.13"
+  },
+  "devDependencies": {
+    "live-reload": "1.1.0",
+    "watch": "0.16.0",
+    "npm-run-all": "1.2.13"
+  },
+  "author": "Vakrim",
+  "license": "MIT"
+}

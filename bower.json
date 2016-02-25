@@ -1,0 +1,21 @@
+{
+  "name": "towards-mass",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "Vakrim"
+  ],
+  "license": "MIT",
+  "moduleType": [],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "paper": "^0.9.25"
+  }
+}
