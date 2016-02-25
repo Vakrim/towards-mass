@@ -15,17 +15,17 @@ module.exports = class Ship extends mix(BaseActor).with(Physics) {
     this.instance = symbolsLibrary.ship.place();
   }
 
-  step(dt) {
-    super.step(dt);
+  step(ev) {
+    super.step(ev);
 
     if(Key.isDown('up')) {
       let dirVector = new Point(Math.cos(this.direction), Math.sin(this.direction));
       this.applyForce(dirVector.multiply(1000))
     }
     if(Key.isDown('left')) {
-      this.direction -= 3 * dt;
+      this.direction -= 3 * ev.delta;
     } else if(Key.isDown('right')) {
-      this.direction += 3 * dt;
+      this.direction += 3 * ev.delta;
     }
   }
 

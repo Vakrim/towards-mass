@@ -21,8 +21,8 @@ class TowardsMass {
     paper.view.on('frame', this.step);
   }
 
-  step() {
-    engine.step(1/60);
+  step(ev) {
+    engine.step(ev);
     render.render(this.engine);
   }
 

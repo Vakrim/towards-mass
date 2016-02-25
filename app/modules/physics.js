@@ -13,9 +13,9 @@ let Physics = (superclass) => class extends superclass {
     this.forceSum = this.forceSum.add(force);
   }
 
-  step(dt) {
-    this.velocity = this.velocity.add(this.forceSum.multiply(dt / this.mass));
-    this.position = this.position.add(this.velocity.multiply(dt));
+  step(ev) {
+    this.velocity = this.velocity.add(this.forceSum.multiply(ev.delta / this.mass));
+    this.position = this.position.add(this.velocity.multiply(ev.delta));
     this.forceSum = new Point(0, 0);
   }
 }
