@@ -6,9 +6,9 @@ class Render {
     this.setCanvas(canvas);
   }
 
-  render(state) {
-    this.renderEach(state.ships);
-    this.renderEach(state.bullets);
+  render(engine) {
+    this.renderEach(engine.ships);
+    this.renderEach(engine.bullets);
   }
 
   renderEach(list) {

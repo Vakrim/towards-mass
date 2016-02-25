@@ -1,6 +1,6 @@
 const render = require('./render');
 const paper = require('./paper');
-const state = require('./state');
+const engine = require('./engine');
 const symbolsLibrary = require('./symbols-library');
 
 class TowardsMass {
@@ -11,19 +11,19 @@ class TowardsMass {
 
   start() {
     this.prepareDocument();
-    this.state = state;
+    this.engine = engine;
     this.render = render;
 
     this.render.init(this.canvas);
     symbolsLibrary.init();
-    this.state.init();
+    this.engine.init();
 
     paper.view.on('frame', this.step);
   }
 
   step() {
-    state.step(1/60);
-    render.render(this.state);
+    engine.step(1/60);
+    render.render(this.engine);
   }
 
   prepareDocument() {

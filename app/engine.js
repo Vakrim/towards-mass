@@ -3,7 +3,7 @@ const Planet = require('./actors/planet');
 const Bullet = require('./actors/bullet');
 const Point = require('./paper').Point;
 
-class State {
+class Engine {
 
   constructor() {
     this.ships = new Set();
@@ -44,4 +44,4 @@ class State {
   }
 }
 
-module.exports = new State();
+module.exports = new Engine();
