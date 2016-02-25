@@ -7,9 +7,8 @@ const BaseActor = require('./base-actor');
 
 module.exports = class Ship extends mix(BaseActor).with(Physics) {
 
-  constructor(position) {
-    super();
-    this.position = position;
+  constructor(options) {
+    super(options);
     this.direction = 0;
     this.mass = 10;
 

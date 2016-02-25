@@ -12,12 +12,17 @@ class Engine {
   }
 
   init() {
-    this.ships.add(new Ship(new Point(50, 50)));
-    this.planets.add(new Planet(new Point(500, 500), 50));
+    this.createActor('Ship', { position: new Point(50, 50) });
+    this.createActor('Planet', { position: new Point(500, 500), radius: 50 });
 
     for(let i = 10; i < 200; i += 10) {
-      this.bullets.add(new Bullet(new Point(5, i)));
+      this.createActor('Bullet', { position: new Point(5, i) });
     }
+  }
+
+  createActor(type, options) {
+    let typeClass = eval(type);
+    this[`${ type.toLowerCase() }s`].add(new typeClass(options));
   }
 
   step(dt) {

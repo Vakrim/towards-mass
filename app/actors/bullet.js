@@ -8,9 +8,8 @@ const BaseActor = require('./base-actor');
 
 module.exports = class Bullet extends mix(BaseActor).with(Physics) {
 
-  constructor(position) {
-    super();
-    this.position = position;
+  constructor(options) {
+    super(options);
     this.direction = 0;
     this.velocity = new Point(50, 0);
     this.mass = 0.1;

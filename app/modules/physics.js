@@ -2,8 +2,8 @@ const Point = require('../paper').Point;
 
 let Physics = (superclass) => class extends superclass {
 
-  constructor() {
-    super();
+  constructor(options) {
+    super(options);
     this.velocity = new Point(0, 0);
     this.forceSum = new Point(0, 0);
     this.mass = 10;
