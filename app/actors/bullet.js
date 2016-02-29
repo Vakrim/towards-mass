@@ -11,7 +11,7 @@ module.exports = class Bullet extends mix(BaseActor).with(Physics) {
   constructor(options) {
     super(options);
     this.mass = 0.1;
-
+    this.initialVelocity = this.velocity.clone();
     this.instance = symbolsLibrary.bullet.place();
   }
 

@@ -7,6 +7,12 @@ let Physics = (superclass) => class extends superclass {
     this.velocity = options.velocity || new Point(0, 0);
     this.forceSum = options.forceSum || new Point(0, 0);
     this.mass =  options.mass || 10;
+
+    this.applyAcc = this.applyAcc.bind(this);
+  }
+
+  applyAcc(acc) {
+    this.applyForce(acc.multiply(this.mass));
   }
 
   applyForce(force) {

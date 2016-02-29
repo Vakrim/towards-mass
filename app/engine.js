@@ -7,7 +7,7 @@ class Engine {
   }
 
   init() {
-    this.createActor('Ship', { position: new Point(50, 50) });
+    this.player = this.createActor('Ship', { position: new Point(50, 50) });
     this.createActor('Planet', { position: new Point(500, 500), radius: 50 });
     this.createActor('Planet', { position: new Point(600, 400), radius: 50 });
 
@@ -15,7 +15,9 @@ class Engine {
 
   createActor(type, options) {
     let typeClass = eval(type);
-    this[`${ type.toLowerCase() }s`].add(new typeClass(options));
+    let actor = new typeClass(options)
+    this[`${ type.toLowerCase() }s`].add(actor);
+    return actor;
   }
 
   step(dt) {
@@ -23,6 +25,14 @@ class Engine {
     this.applyGravity(this.bullets);
     this.stepEach(this.ships, dt);
     this.stepEach(this.bullets, dt);
+
+    let cameraDiff;
+    if(this.player.velocity.length > 100) {
+      cameraDiff = this.player.velocity.normalize(100);
+    } else {
+      cameraDiff = this.player.velocity;
+    }
+    paper.view.center = this.player.position.add(cameraDiff);
   }
 
   stepEach(list, dt) {
@@ -31,13 +41,17 @@ class Engine {
     }
   }
 
-  applyGravity(list) {
+  allGravityElements(position, callback) {
     for(let planet of this.planets) {
-      for(let entity of list) {
-        let diffPosition = planet.position.subtract(entity.position);
-        let force = planet.mass * entity.mass / Math.pow(diffPosition.length, 2);
-        entity.applyForce(diffPosition.normalize(force));
-      }
+      let diffPosition = planet.position.subtract(position);
+      let acc = planet.mass / Math.pow(diffPosition.length, 2);
+      callback(diffPosition.normalize(acc));
+    }
+  }
+
+  applyGravity(list) {
+    for(let entity of list) {
+      this.allGravityElements(entity.position, entity.applyAcc)
     }
   }
 }
@@ -47,4 +61,5 @@ module.exports = new Engine();
 const Ship = require('./actors/ship');
 const Planet = require('./actors/planet');
 const Bullet = require('./actors/bullet');
+const paper = require('./paper');
 const Point = require('./paper').Point;
