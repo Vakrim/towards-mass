@@ -7,7 +7,9 @@ module.exports = class Planet extends BaseActor {
 
   constructor(options) {
     super(options);
-    this.mass = 4 / 3 * Math.PI * this.radius * 10000;
+    Object.assign(this, {
+      mass: 4 / 3 * Math.PI * this.radius * 10000
+    }, options);
 
     this.instance = new Path.Circle(this.position, this.radius)
     this.instance.strokeColor = '#ffffff';

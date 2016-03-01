@@ -10,10 +10,11 @@ const engine = require('../engine');
 module.exports = class Ship extends mix(BaseActor).with(Physics) {
 
   constructor(options) {
-    super(options);
-    this.direction = 0;
-    this.mass = 10;
-    this.lastShootTime = 0;
+    super(Object.assign({
+      direction: 0,
+      mass: 10,
+      lastShootTime: 0
+    }, options));
 
     this.instance = symbolsLibrary.ship.place();
   }

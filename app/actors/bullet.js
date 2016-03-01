@@ -9,9 +9,10 @@ const BaseActor = require('./base-actor');
 module.exports = class Bullet extends mix(BaseActor).with(Physics) {
 
   constructor(options) {
-    super(options);
-    this.mass = 0.1;
-    this.initialVelocity = this.velocity.clone();
+    super(Object.assign({
+      mass: 0.1
+    }, options));
+
     this.instance = symbolsLibrary.bullet.place();
   }
 
