@@ -2,6 +2,8 @@ const paper = require('./paper');
 const engine = require('./engine');
 const Path = require('./paper').Path;
 const Point = require('./paper').Point;
+const Group = require('./paper').Group;
+const Size = require('./paper').Size;
 
 class Render {
 
@@ -12,6 +14,15 @@ class Render {
     this.bulletTrajectory = new Path();
     this.shipTrajectory.strokeColor = '#ff0000';
     this.bulletTrajectory.strokeColor = '#0000ff';
+
+    this.healthBarGroup = new Group();
+    for(let i = 0; i < 5; i++) {
+      this.healthBarGroup.addChild(new Path.Rectangle(new Point(17 * i, 0), new Size(14, 7)));
+    }
+    this.healthBarGroup.fillColor = '#ffffff';
+    this.healthBarGroup.strokeColor = '#ffffff';
+    this.healthBarGroup.opacity = 0.5;
+    this.healthBarGroup.skew(-30, 0);
   }
 
   render() {
@@ -29,6 +40,18 @@ class Render {
   renderGUI() {
     this.renderTrajectory(this.shipTrajectory, engine.player.velocity.clone());
     this.renderTrajectory(this.bulletTrajectory, engine.player.velocity.add(new Point({ angle: engine.player.direction, length: 100 })));
+    this.renderHealthBar();
+  }
+
+  renderHealthBar() {
+    this.healthBarGroup.position = engine.player.position.add(new Point(0, 25));
+    this.healthBarGroup.children.forEach((bar, i) => {
+      if(engine.player.health >= i + 1) {
+        bar.fillColor = '#ffffff';
+      } else {
+        bar.fillColor = null;
+      }
+    });
   }
 
   renderTrajectory(trajectory, initialVelocity) {

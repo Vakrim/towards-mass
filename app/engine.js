@@ -7,9 +7,11 @@ class Engine {
   }
 
   init() {
-    this.player = this.createActor('Ship', { position: new Point(50, 50) });
+    this.player = this.createActor('Ship', { position: new Point(0, 0) });
     this.createActor('Planet', { position: new Point(500, 500), radius: 50 });
-    this.createActor('Planet', { position: new Point(600, 400), radius: 50 });
+    this.createActor('Planet', { position: new Point(500, -500), radius: 50 });
+    this.createActor('Planet', { position: new Point(-500, 500), radius: 50 });
+    this.createActor('Planet', { position: new Point(-500, -500), radius: 50 });
 
   }
 
@@ -44,7 +46,8 @@ class Engine {
   allGravityElements(position, callback) {
     for(let planet of this.planets) {
       let diffPosition = planet.position.subtract(position);
-      let acc = planet.mass / Math.pow(diffPosition.length, 2);
+      // let acc = planet.mass / Math.pow(diffPosition.length, 2);
+      let acc = planet.mass / diffPosition.length / 100;
       callback(diffPosition.normalize(acc));
     }
   }
