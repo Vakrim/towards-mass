@@ -16,10 +16,6 @@ module.exports = class Ship extends mix(BaseActor).with(Physics) {
     this.lastShootTime = 0;
 
     this.instance = symbolsLibrary.ship.place();
-    this.trajectory = new Path();
-    this.bulletTrajectory = new Path();
-    this.trajectory.strokeColor = '#ff0000';
-    this.bulletTrajectory.strokeColor = '#0000ff';
   }
 
   step(ev) {
@@ -45,22 +41,5 @@ module.exports = class Ship extends mix(BaseActor).with(Physics) {
   render() {
     this.instance.position = this.position;
     this.instance.rotation = this.direction;
-
-    this.renderTrajectory(this.trajectory, this.velocity.clone());
-    this.renderTrajectory(this.bulletTrajectory, this.velocity.add(new Point({ angle: this.direction, length: 100 })));
-  }
-
-  renderTrajectory(trajectory, initialVelocity) {
-    let points = [];
-    let trajPos = this.position.clone();
-    let trajVel = initialVelocity;
-    for(let i = 0; i < 30; i++ ) {
-      engine.allGravityElements(trajPos, (acc) => {
-        trajVel = trajVel.add(acc.multiply(1/10));
-      });
-      trajPos = trajPos.add(trajVel.multiply(1/10));
-      points.push(trajPos);
-    }
-    trajectory.segments = points;
   }
 }
